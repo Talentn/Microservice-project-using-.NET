@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FinalP.Web.Models.EtudiantDto>
+
+
+<br />
+<br />
+<div class="container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Student List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-action="EtudiantCreate" class="btn btn-outline-info"><i class="fas fa-plus"></i>Add Student</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nom
+                </th>
+              <th>
+                    Classe
+                </th>
+                <th>
+                    Age
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.EtudiantName
+                    </td><td>
+                        @item.Classename
+                    </td><td>
+                        @item.age
+                    </td><td>
+                        <a asp-action="Edit" class="btn btn-success" asp-route-etudiantId="@item.EtudiantId">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-etudiantId="@item.EtudiantId">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

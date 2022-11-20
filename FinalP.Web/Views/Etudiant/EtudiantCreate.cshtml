@@ -1,0 +1,42 @@
+﻿@model FinalP.Web.Models.EtudiantDto
+<form asp-action="EtudiantCreate">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-info">Add Student</h1>
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-2">
+                <label asp-for="EtudiantName" class="custom-control-label pt-2" style="font-size:20px"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="EtudiantName" class="form-control" />
+                <span asp-validation-for="EtudiantName" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label asp-for="Classename" class="custom-control-label pt-2" style="font-size:20px"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Classename" class="form-control" />
+                <span asp-validation-for="Classename" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label asp-for="age" class="custom-control-label pt-2" style="font-size:20px"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="age" class="form-control" />
+                <span asp-validation-for="age" class="text-danger"></span>
+            </div>
+            <div class="col-5 offset-2">
+                <a asp-action="Index" class="btn-primary btn form-control ">Back to list</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Create" class="btn btn-info form-control" />
+            </div>
+
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
