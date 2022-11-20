@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace FinalP.Web.Controllers
 {
     public class EtudiantController : Controller
@@ -18,9 +19,9 @@ namespace FinalP.Web.Controllers
 
         public async Task<IActionResult> EtudiantIndex()
         {
-            List<EtudiantDto> list = new();
+            List<EtudiantDto> list = new List<EtudiantDto>();
             var response = await _classeService.GetAllEtudiantsAsync<ResponseDto>();
-            if  (response != null && response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<EtudiantDto>>(Convert.ToString(response.Result));
             }
@@ -29,7 +30,22 @@ namespace FinalP.Web.Controllers
 
         public async Task<IActionResult> EtudiantCreate()
         {
-              return View();
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EtudiantCreate(EtudiantDto model)
+        {
+            if (ModelState.IsValid)
+            { 
+                var response = await _classeService.CreateEtudiantAsync<ResponseDto>(model);
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(EtudiantIndex));
+                }
+            }
+            return View(model);
+            
         }
     }
 }
