@@ -1,4 +1,5 @@
 ﻿using FinalP.Web.Models;
+using FinalP.Web.Services;
 using FinalP.Web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -49,7 +50,7 @@ namespace FinalP.Web.Controllers
             
         }
 
-        public async Task<IActionResult> EtudiantEdit(int etudiantId)
+        public async Task<IActionResult> EditEtudiant(int etudiantId)
         {
             var response = await _classeService.GetEtudiantByIdAsync<ResponseDto>(etudiantId);
             if (response != null && response.IsSuccess)
@@ -61,7 +62,7 @@ namespace FinalP.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EtudiantEdit(EtudiantDto model)
+        public async Task<IActionResult> EditEtudiant(EtudiantDto model)
         {
             if (ModelState.IsValid)
             {
@@ -74,5 +75,32 @@ namespace FinalP.Web.Controllers
             return View(model);
 
         }
+    
+
+    public async Task<IActionResult> DeleteEtudiant(int etudiantId)
+    {
+        var response = await _classeService.GetEtudiantByIdAsync<ResponseDto>(etudiantId);
+        if (response != null && response.IsSuccess)
+        {
+            EtudiantDto model = JsonConvert.DeserializeObject<EtudiantDto>(Convert.ToString(response.Result));
+            return View(model);
+        }
+        return NotFound();
     }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteEtudiant(EtudiantDto model)
+    {
+        if (ModelState.IsValid)
+        {
+            var response = await _classeService.DeleteEtudiantAsync<ResponseDto>(model.EtudiantId);
+            if (response.IsSuccess)
+            {
+                return RedirectToAction(nameof(EtudiantIndex));
+            }
+        }
+        return View(model);
+
+    }
+}
 }
